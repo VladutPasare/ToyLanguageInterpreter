@@ -1,0 +1,28 @@
+package model.expressions;
+
+import model.ADTs.IMyDictionary;
+import model.exceptions.ExpressionException;
+import model.values.Value;
+
+public class ValueExpression implements Expression {
+    private final Value e;
+
+    public ValueExpression(Value e) {
+        this.e = e;
+    }
+
+    @Override
+    public Value evaluate(IMyDictionary<String, Value> table) throws ExpressionException {
+        return e;
+    }
+
+    @Override
+    public String toString() {
+        return e.toString();
+    }
+
+    @Override
+    public Expression deepCopy() {
+        return new ValueExpression(e);
+    }
+}

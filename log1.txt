@@ -1,0 +1,90 @@
+Execution Stack:
+(int v;(v=2;print(v)))
+
+
+Symbols Table:
+
+
+Out:
+
+
+File Table:
+
+
+
+Execution Stack:
+(v=2;print(v))
+int v
+
+
+Symbols Table:
+
+
+Out:
+
+
+File Table:
+
+
+
+Execution Stack:
+(v=2;print(v))
+
+
+Symbols Table:
+v-->0
+
+
+Out:
+
+
+File Table:
+
+
+
+Execution Stack:
+print(v)
+v=2
+
+
+Symbols Table:
+v-->0
+
+
+Out:
+
+
+File Table:
+
+
+
+Execution Stack:
+print(v)
+
+
+Symbols Table:
+v-->2
+
+
+Out:
+
+
+File Table:
+
+
+
+Execution Stack:
+
+
+Symbols Table:
+v-->2
+
+
+Out:
+2
+
+
+File Table:
+
+
+

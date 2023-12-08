@@ -1,0 +1,175 @@
+Execution Stack:
+(bool a;(int v;(a=true;(If(a)Then(v=2)else(v=3);print(v)))))
+
+
+Symbols Table:
+
+
+Out:
+
+
+File Table:
+
+
+
+Execution Stack:
+(int v;(a=true;(If(a)Then(v=2)else(v=3);print(v))))
+bool a
+
+
+Symbols Table:
+
+
+Out:
+
+
+File Table:
+
+
+
+Execution Stack:
+(int v;(a=true;(If(a)Then(v=2)else(v=3);print(v))))
+
+
+Symbols Table:
+a-->false
+
+
+Out:
+
+
+File Table:
+
+
+
+Execution Stack:
+(a=true;(If(a)Then(v=2)else(v=3);print(v)))
+int v
+
+
+Symbols Table:
+a-->false
+
+
+Out:
+
+
+File Table:
+
+
+
+Execution Stack:
+(a=true;(If(a)Then(v=2)else(v=3);print(v)))
+
+
+Symbols Table:
+a-->false
+v-->0
+
+
+Out:
+
+
+File Table:
+
+
+
+Execution Stack:
+(If(a)Then(v=2)else(v=3);print(v))
+a=true
+
+
+Symbols Table:
+a-->false
+v-->0
+
+
+Out:
+
+
+File Table:
+
+
+
+Execution Stack:
+(If(a)Then(v=2)else(v=3);print(v))
+
+
+Symbols Table:
+a-->true
+v-->0
+
+
+Out:
+
+
+File Table:
+
+
+
+Execution Stack:
+print(v)
+If(a)Then(v=2)else(v=3)
+
+
+Symbols Table:
+a-->true
+v-->0
+
+
+Out:
+
+
+File Table:
+
+
+
+Execution Stack:
+print(v)
+v=2
+
+
+Symbols Table:
+a-->true
+v-->0
+
+
+Out:
+
+
+File Table:
+
+
+
+Execution Stack:
+print(v)
+
+
+Symbols Table:
+a-->true
+v-->2
+
+
+Out:
+
+
+File Table:
+
+
+
+Execution Stack:
+
+
+Symbols Table:
+a-->true
+v-->2
+
+
+Out:
+2
+
+
+File Table:
+
+
+
