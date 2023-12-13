@@ -5,6 +5,6 @@ import model.exceptions.ExpressionException;
 import model.exceptions.StatementException;
 
 public interface Statement {
-    public ProgramState execute(ProgramState state) throws StatementException, ExpressionException, ADTException;
-    public Statement deepCopy();
+    ProgramState execute(ProgramState state) throws StatementException, ExpressionException, ADTException;
+    Statement deepCopy();
 }

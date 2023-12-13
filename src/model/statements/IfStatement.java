@@ -22,8 +22,8 @@ public class IfStatement implements Statement {
     @Override
     public ProgramState execute(ProgramState state) throws StatementException, ExpressionException {
         IMyStack<Statement> executionStack = state.getExecutionStack();
-        Value condition = expression.evaluate(state.getSymbolsTable());
-        if(!condition.getType().equals(new BoolType()))
+        Value condition = expression.evaluate(state.getSymbolsTable(), state.getHeap());
+        if(!(condition.getType() instanceof BoolType))
             throw new StatementException("Condition is not boolean!");
 
         BoolValue c = (BoolValue) condition;
@@ -36,7 +36,7 @@ public class IfStatement implements Statement {
 
     @Override
     public String toString() {
-        return "If(" + expression.toString() + ")Then(" + thenStatement.toString() + ")else(" + elseStatement.toString() + ")";
+        return "if(" + expression.toString() + ")then(" + thenStatement.toString() + ")else(" + elseStatement.toString() + ")";
     }
 
     @Override

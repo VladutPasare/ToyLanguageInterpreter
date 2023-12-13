@@ -1,6 +1,7 @@
 package model.expressions;
 
 import model.ADTs.IMyDictionary;
+import model.ADTs.IMyHeap;
 import model.exceptions.ExpressionException;
 import model.values.Value;
 
@@ -11,7 +12,7 @@ public class VariableExpression implements Expression {
         this.id = id;
     }
     @Override
-    public Value evaluate(IMyDictionary<String, Value> table) throws ExpressionException {
+    public Value evaluate(IMyDictionary<String, Value> table, IMyHeap<Integer, Value> heap) throws ExpressionException {
         return table.lookUp(id);
     }
 

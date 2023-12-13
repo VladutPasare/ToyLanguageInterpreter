@@ -31,14 +31,14 @@ public class ReadFileStatement implements Statement {
         IMyDictionary<StringValue, BufferedReader> fileTable = state.getFileTable();
 
         if(!symbolsTable.isDefined(variableName))
-           throw new StatementException("Variable " + variableName + " not defined");
+           throw new StatementException("Variable " + variableName + " is not defined");
 
-        if(!symbolsTable.lookUp(variableName).getType().equals(new IntType()))
+        if(!(symbolsTable.lookUp(variableName).getType() instanceof IntType))
             throw new StatementException(variableName + " is not of type int");
 
-        Value value = expression.evaluate(symbolsTable);
+        Value value = expression.evaluate(symbolsTable, state.getHeap());
 
-        if(!value.getType().equals(new StringType()))
+        if(!(value.getType() instanceof StringType))
             throw new StatementException(value + "The value couldn't be evaluated to a string value");
 
         StringValue stringValue = (StringValue) value;
@@ -60,7 +60,7 @@ public class ReadFileStatement implements Statement {
         } catch (IOException e) {
             throw new StatementException(e.getMessage());
         }
-        return null;
+        return state;
     }
 
     @Override

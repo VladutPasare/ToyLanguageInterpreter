@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class MyDictionary<K, V> implements IMyDictionary<K, V> {
-    private Map<K, V> map;
+    private final Map<K, V> map;
 
     public MyDictionary () {
         map = new HashMap<>();
@@ -16,6 +16,10 @@ public class MyDictionary<K, V> implements IMyDictionary<K, V> {
         if(map.containsKey(key))
             throw new ADTException("Dictionary already contains the key " + key + '!');
         map.put(key, value);
+    }
+
+    public Map<K, V> getContent() {
+        return map;
     }
 
     @Override
@@ -45,7 +49,7 @@ public class MyDictionary<K, V> implements IMyDictionary<K, V> {
         StringBuilder s = new StringBuilder();
 
         for(K key: map.keySet())
-            s.append(key.toString()).append("-->").append(map.get(key).toString()).append("\n");
+            s.append(key.toString()).append("-->").append(map.get(key)).append("\n");
         return s.toString();
     }
 }

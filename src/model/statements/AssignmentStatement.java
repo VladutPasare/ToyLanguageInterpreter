@@ -22,8 +22,8 @@ public class AssignmentStatement implements Statement {
         IMyDictionary<String, Value> symbolsTable = state.getSymbolsTable();
 
         if(symbolsTable.isDefined(id)) {
-            Value value = expression.evaluate(symbolsTable);
-            Type idType = (symbolsTable.lookUp(id).getType());
+            Value value = expression.evaluate(symbolsTable, state.getHeap());
+            Type idType = symbolsTable.lookUp(id).getType();
 
             if(value.getType().equals(idType))
                 symbolsTable.update(id, value);

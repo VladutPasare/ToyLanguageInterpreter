@@ -1,6 +1,7 @@
 package model.expressions;
 
 import model.ADTs.IMyDictionary;
+import model.ADTs.IMyHeap;
 import model.exceptions.ExpressionException;
 import model.types.BoolType;
 import model.values.BoolValue;
@@ -21,13 +22,13 @@ public class LogicExpression implements Expression {
     }
 
     @Override
-    public Value evaluate(IMyDictionary<String, Value> table) throws ExpressionException {
+    public Value evaluate(IMyDictionary<String, Value> table, IMyHeap<Integer, Value> heap) throws ExpressionException {
         Value v1, v2;
-        v1 = e1.evaluate(table);
+        v1 = e1.evaluate(table, heap);
 
-        if(v1.getType().equals(new BoolType())) {
-            v2 = e2.evaluate(table);
-            if(v2.getType().equals(new BoolType())) {
+        if(v1 instanceof  BoolValue) {
+            v2 = e2.evaluate(table, heap);
+            if(v2 instanceof BoolValue) {
                 BoolValue b1 = (BoolValue) v1;
                 BoolValue b2 = (BoolValue) v2;
                 boolean n1, n2;

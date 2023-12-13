@@ -1,6 +1,7 @@
 package model.expressions;
 
 import model.ADTs.IMyDictionary;
+import model.ADTs.IMyHeap;
 import model.exceptions.ExpressionException;
 import model.types.IntType;
 import model.values.IntValue;
@@ -24,12 +25,12 @@ public class ArithmeticExpression implements Expression {
             this.operator = 4;
     }
     @Override
-    public Value evaluate(IMyDictionary<String, Value> table) throws ExpressionException {
+    public Value evaluate(IMyDictionary<String, Value> table, IMyHeap<Integer, Value> heap) throws ExpressionException {
         Value v1, v2;
-        v1 = e1.evaluate(table);
-        if(v1.getType().equals(new IntType())) {
-            v2 = e2.evaluate(table);
-            if(v2.getType().equals(new IntType())) {
+        v1 = e1.evaluate(table, heap);
+        if(v1 instanceof IntValue) {
+            v2 = e2.evaluate(table, heap);
+            if(v2 instanceof IntValue) {
                 IntValue i1 = (IntValue) v1;
                 IntValue i2 = (IntValue) v2;
                 int n1, n2;

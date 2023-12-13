@@ -16,7 +16,7 @@ public class PrintStatement implements Statement {
     @Override
     public ProgramState execute(ProgramState state) throws ExpressionException {
         IMyList<Value> out = state.getOut();
-        out.add(expression.evaluate(state.getSymbolsTable()));
+        out.add(expression.evaluate(state.getSymbolsTable(), state.getHeap()));
         return state;
     }
 

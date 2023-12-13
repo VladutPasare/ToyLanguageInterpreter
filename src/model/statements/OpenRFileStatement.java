@@ -20,15 +20,15 @@ public class OpenRFileStatement implements Statement {
 
     @Override
     public ProgramState execute(ProgramState state) throws StatementException, ExpressionException, ADTException {
-        Value value = expression.evaluate(state.getSymbolsTable());
+        Value value = expression.evaluate(state.getSymbolsTable(), state.getHeap());
 
-        if(!value.getType().equals(new StringType()))
+        if(!(value instanceof StringValue))
             throw new StatementException("The value couldn't be evaluated to a string value");
 
         StringValue stringValue = (StringValue) value;
 
         if(state.getFileTable().isDefined(stringValue))
-            throw new StatementException("Key " + stringValue.getValue() + " already in File Table");
+            throw new StatementException("Key " + stringValue.getValue() + " is already in File Table");
 
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(stringValue.getValue()));
@@ -37,7 +37,7 @@ public class OpenRFileStatement implements Statement {
         catch (IOException e) {
             throw new StatementException(e.getMessage());
         }
-        return null;
+        return state;
     }
 
     @Override

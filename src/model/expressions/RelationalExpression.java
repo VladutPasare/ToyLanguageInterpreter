@@ -1,6 +1,7 @@
 package model.expressions;
 
 import model.ADTs.IMyDictionary;
+import model.ADTs.IMyHeap;
 import model.exceptions.ExpressionException;
 import model.types.IntType;
 import model.values.BoolValue;
@@ -10,7 +11,7 @@ import model.values.Value;
 public class RelationalExpression implements Expression {
     Expression e1;
     Expression e2;
-    // 1 <, 2 <=, 3 ==, 4 !=, 5 >, 5 >=
+    // 1 <, 2 <=, 3 ==, 4 !=, 5 >, 6 >=
     int operator;
 
     public RelationalExpression(Expression e1, Expression e2, int operator) {
@@ -20,15 +21,19 @@ public class RelationalExpression implements Expression {
     }
 
     @Override
-    public Value evaluate(IMyDictionary<String, Value> table) throws ExpressionException {
-        Value v1 = e1.evaluate(table);
+    public Value evaluate(IMyDictionary<String, Value> table, IMyHeap<Integer, Value> heap) throws ExpressionException {
 
-        if(!v1.getType().equals(new IntType()))
+        if(operator < 1 || operator > 6)
+            throw new ExpressionException("Operator is not valid!");
+
+        Value v1 = e1.evaluate(table, heap);
+
+        if(!(v1 instanceof IntValue))
             throw new ExpressionException("The expression's value couldn't be evaluated to an int value");
 
-        Value v2 = e2.evaluate(table);
+        Value v2 = e2.evaluate(table, heap);
 
-        if(!v2.getType().equals(new IntType()))
+        if(!(v2 instanceof IntValue))
             throw new ExpressionException("The expression's value couldn't be evaluated to an int value");
 
         IntValue i1 = (IntValue) v1;
@@ -59,17 +64,23 @@ public class RelationalExpression implements Expression {
 
         switch (operator) {
             case 1:
-                op += "<";
+                op = "<";
+                break;
             case 2:
-                op += "<=";
+                op = "<=";
+                break;
             case 3:
-                op += "==";
+                op = "==";
+                break;
             case 4:
-                op += "!=";
+                op = "!=";
+                break;
             case 5:
-                op += ">";
+                op = ">";
+                break;
             case 6:
-                op += ">=";
+                op = ">=";
+                break;
         }
         return e1.toString() + op + e2.toString();
     }

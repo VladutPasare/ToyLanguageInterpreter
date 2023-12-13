@@ -21,15 +21,15 @@ public class CloseRFile implements Statement {
 
     @Override
     public ProgramState execute(ProgramState state) throws StatementException, ExpressionException, ADTException {
-        Value value = expression.evaluate(state.getSymbolsTable());
+        Value value = expression.evaluate(state.getSymbolsTable(), state.getHeap());
 
-        if(!value.getType().equals(new StringType()))
+        if(!(value.getType() instanceof StringType))
             throw new StatementException(value + "The value couldn't be evaluated to a string value");
 
         StringValue stringValue = (StringValue) value;
 
         if(!state.getFileTable().isDefined(stringValue))
-            throw new StatementException("File " + stringValue.getValue() + "not in File Table");
+            throw new StatementException("File " + stringValue.getValue() + " is not in File Table");
 
         BufferedReader bufferedReader = state.getFileTable().lookUp(stringValue);
         try {
@@ -38,7 +38,7 @@ public class CloseRFile implements Statement {
             throw new StatementException(e.getMessage());
         }
         state.getFileTable().remove(stringValue);
-        return null;
+        return state;
     }
 
     @Override
