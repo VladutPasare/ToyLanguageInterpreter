@@ -38,7 +38,7 @@ public class CloseRFile implements Statement {
             throw new StatementException(e.getMessage());
         }
         state.getFileTable().remove(stringValue);
-        return state;
+        return null;
     }
 
     @Override

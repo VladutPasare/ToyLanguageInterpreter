@@ -15,7 +15,7 @@ public class CompoundStatement implements Statement {
         IMyStack<Statement> executionStack = state.getExecutionStack();
         executionStack.push(second);
         executionStack.push(first);
-        return state;
+        return null;
     }
 
     @Override

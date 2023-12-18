@@ -85,6 +85,13 @@ public class Main {
                                 "v", new ArithmeticExpression('-', new VariableExpression("v"), new ValueExpression(new IntValue(1)))))),
                                 new PrintStatement(new VariableExpression("v")))));
 
+        Statement example10 = new CompoundStatement(new VariableDeclarationStatement("v", new IntType()), new CompoundStatement(new VariableDeclarationStatement("a",
+                new ReferenceType(new IntType())), new CompoundStatement(new AssignmentStatement("v", new ValueExpression(new IntValue(10))), new CompoundStatement(
+                        new NewStatement("a", new ValueExpression(new IntValue(22))), new CompoundStatement(new ForkStatement(new CompoundStatement(new WriteHeapStatement("a", new ValueExpression(new IntValue(30))),
+                new CompoundStatement(new AssignmentStatement("v", new ValueExpression(new IntValue(32))), new CompoundStatement(new PrintStatement(new VariableExpression("v")),
+                        new PrintStatement(new HeapReadingExpression(new VariableExpression("a"))))))),
+                               new CompoundStatement(new PrintStatement(new VariableExpression("v")), new PrintStatement(new HeapReadingExpression(new VariableExpression("a")))))))));
+
         IMyStack<Statement> stack1 = new MyStack<>();
         stack1.push(example1);
         IMyStack<Statement> stack2 = new MyStack<>();
@@ -103,6 +110,8 @@ public class Main {
         stack8.push(example8);
         IMyStack<Statement> stack9 = new MyStack<>();
         stack9.push(example9);
+        IMyStack<Statement> stack10 = new MyStack<>();
+        stack10.push(example10);
 
         ProgramState programState1 = new ProgramState(stack1, new MyDictionary<>(), new MyList<Value>(), new MyDictionary<>(), new MyHeap<>());
         ProgramState programState2 = new ProgramState(stack2, new MyDictionary<>(), new MyList<Value>(), new MyDictionary<>(), new MyHeap<>());
@@ -113,6 +122,7 @@ public class Main {
         ProgramState programState7 = new ProgramState(stack7, new MyDictionary<>(), new MyList<Value>(), new MyDictionary<>(), new MyHeap<>());
         ProgramState programState8 = new ProgramState(stack8, new MyDictionary<>(), new MyList<Value>(), new MyDictionary<>(), new MyHeap<>());
         ProgramState programState9 = new ProgramState(stack9, new MyDictionary<>(), new MyList<Value>(), new MyDictionary<>(), new MyHeap<>());
+        ProgramState programState10 = new ProgramState(stack10, new MyDictionary<>(), new MyList<Value>(), new MyDictionary<>(), new MyHeap<>());
 
         try {
             IRepository repository1 = new Repository("src/log1.txt");
@@ -124,6 +134,7 @@ public class Main {
             IRepository repository7 = new Repository("src/log7.txt");
             IRepository repository8 = new Repository("src/log8.txt");
             IRepository repository9 = new Repository("src/log9.txt");
+            IRepository repository10 = new Repository("src/log10.txt");
 
             repository1.add(programState1);
             repository2.add(programState2);
@@ -134,6 +145,7 @@ public class Main {
             repository7.add(programState7);
             repository8.add(programState8);
             repository9.add(programState9);
+            repository10.add(programState10);
 
             Controller controller1 = new Controller(repository1);
             Controller controller2 = new Controller(repository2);
@@ -144,6 +156,7 @@ public class Main {
             Controller controller7 = new Controller(repository7);
             Controller controller8 = new Controller(repository8);
             Controller controller9 = new Controller(repository9);
+            Controller controller10 = new Controller(repository10);
 
             TextMenu textMenu = new TextMenu();
 
@@ -157,6 +170,7 @@ public class Main {
             textMenu.addCommand(new RunExample("7", example7.toString(), controller7));
             textMenu.addCommand(new RunExample("8", example8.toString(), controller8));
             textMenu.addCommand(new RunExample("9", example9.toString(), controller9));
+            textMenu.addCommand(new RunExample("10", example10.toString(), controller10));
 
             textMenu.show();
 

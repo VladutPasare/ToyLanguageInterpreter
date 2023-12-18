@@ -60,7 +60,7 @@ public class ReadFileStatement implements Statement {
         } catch (IOException e) {
             throw new StatementException(e.getMessage());
         }
-        return state;
+        return null;
     }
 
     @Override

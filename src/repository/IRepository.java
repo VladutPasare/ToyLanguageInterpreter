@@ -10,6 +10,6 @@ public interface IRepository {
     ProgramState getCurrentProgram();
     void add(ProgramState state);
     List<ProgramState> getProgramStatesList();
-
+    void setProgramStatesList(List <ProgramState> programStatesList);
     void logProgramStateExecute(ProgramState programState) throws MyException;
 }

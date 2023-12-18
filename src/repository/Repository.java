@@ -37,6 +37,11 @@ public class Repository implements IRepository {
         return programStates;
     }
 
+    @Override
+    public void setProgramStatesList(List<ProgramState> programStatesList) {
+        this.programStates = programStatesList;
+    }
+
     public ProgramState getProgramState() {
         return programStates.get(0);
     }

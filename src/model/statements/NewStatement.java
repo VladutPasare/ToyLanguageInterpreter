@@ -40,7 +40,7 @@ public class NewStatement implements Statement {
         Integer newFreeLocation = state.getHeap().getFreeLocation();
         int address = state.getHeap().allocate(newFreeLocation, expressionValue);
         symbolTable.update(id, new ReferenceValue(address, expressionValue.getType()));
-        return state;
+        return null;
     }
 
     @Override

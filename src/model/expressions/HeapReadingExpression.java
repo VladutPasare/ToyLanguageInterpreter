@@ -27,6 +27,7 @@ public class HeapReadingExpression implements Expression {
             throw new ExpressionException("Address " + address + " is not in the heap!");
 
         return heap.getValue(address);
+
     }
 
     @Override
@@ -35,6 +36,6 @@ public class HeapReadingExpression implements Expression {
     }
     @Override
     public Expression deepCopy() {
-        return null;
+        return new HeapReadingExpression(expression.deepCopy());
     }
 }

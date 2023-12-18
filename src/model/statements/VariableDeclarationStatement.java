@@ -23,7 +23,7 @@ public class VariableDeclarationStatement implements Statement {
         if(symbolsTable.isDefined(name))
             throw new StatementException("Variable " + name + " is already declared!");
         symbolsTable.put(name, type.defaultValue());
-        return state;
+        return null;
     }
 
     @Override

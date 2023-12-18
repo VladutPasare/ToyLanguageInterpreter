@@ -29,6 +29,11 @@ public class StringValue implements Value {
         return new StringType();
     }
 
+    @Override
+    public Value deepCopy() {
+        return new StringValue(value);
+    }
+
     public String getValue() {
         return value;
     }

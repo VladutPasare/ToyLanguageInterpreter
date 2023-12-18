@@ -32,7 +32,7 @@ public class AssignmentStatement implements Statement {
         }
         else
             throw new StatementException("The used variable " + id + "was not declared before!");
-        return state;
+        return null;
     }
 
     @Override

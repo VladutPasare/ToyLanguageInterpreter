@@ -25,6 +25,11 @@ public class IntValue implements Value {
         return new IntType();
     }
 
+    @Override
+    public Value deepCopy() {
+        return new IntValue(value);
+    }
+
     public int getValue() {
         return value;
     }

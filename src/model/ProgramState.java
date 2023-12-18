@@ -1,6 +1,10 @@
 package model;
 
 import model.ADTs.*;
+import model.exceptions.ADTException;
+import model.exceptions.ExpressionException;
+import model.exceptions.MyException;
+import model.exceptions.StatementException;
 import model.statements.Statement;
 import model.values.StringValue;
 import model.values.Value;
@@ -13,6 +17,8 @@ public class ProgramState {
     private IMyHeap<Integer, Value> heap;
     private IMyList<Value> out;
     private IMyDictionary<StringValue, BufferedReader> fileTable;
+    private int stateID;
+    private static int id = 0;
 
     public ProgramState(IMyStack<Statement> executionStack, IMyDictionary<String, Value> symbolsTable,
                         IMyList<Value> out, IMyHeap<Integer, Value> heap) {
@@ -30,7 +36,7 @@ public class ProgramState {
         this.heap = heap;
         this.out = out;
         this.fileTable = fileTable;
-
+        this.stateID = getNewID();
     }
 
     public IMyStack<Statement> getExecutionStack() {
@@ -69,9 +75,25 @@ public class ProgramState {
         this.out = out;
     }
 
+    public boolean isNotCompleted() {
+        return !executionStack.isEmpty();
+    }
+
+    public ProgramState oneStep() throws MyException, StatementException, ADTException, ExpressionException {
+        if(executionStack.isEmpty())
+            throw new MyException("Program state's execution stack is empty!");
+        Statement currentStatement = executionStack.pop();
+        return currentStatement.execute(this);
+    }
+
+    public static synchronized int  getNewID() {
+        return ++id;
+    }
+
     @Override
     public String toString() {
-        return  "Execution Stack:\n" + executionStack + "\n\n" +
+        return  "ID: " + stateID + "\n\n" +
+                "Execution Stack:\n" + executionStack + "\n\n" +
                 "Symbols Table:\n" + symbolsTable + "\n\n" +
                 "Heap:\n" + heap + "\n\n" +
                 "Out:\n" + out + "\n\n" +
