@@ -3,6 +3,9 @@ package model.expressions;
 import model.ADTs.IMyDictionary;
 import model.ADTs.IMyHeap;
 import model.exceptions.ExpressionException;
+import model.exceptions.MyException;
+import model.types.ReferenceType;
+import model.types.Type;
 import model.values.ReferenceValue;
 import model.values.Value;
 
@@ -37,5 +40,15 @@ public class HeapReadingExpression implements Expression {
     @Override
     public Expression deepCopy() {
         return new HeapReadingExpression(expression.deepCopy());
+    }
+
+    @Override
+    public Type typeCheck(IMyDictionary<String, Type> typeEnv) throws ExpressionException {
+        Type type = expression.typeCheck(typeEnv);
+        if(type instanceof ReferenceType) {
+            ReferenceType referenceType = (ReferenceType) type;
+            return referenceType.getInner();
+        }
+        else throw new ExpressionException("The expression argument is not a reference type!");
     }
 }

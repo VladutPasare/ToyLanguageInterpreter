@@ -7,6 +7,7 @@ import model.ProgramState;
 import model.exceptions.ADTException;
 import model.exceptions.ExpressionException;
 import model.exceptions.StatementException;
+import model.types.Type;
 import model.values.Value;
 
 import java.util.Map;
@@ -39,5 +40,11 @@ public class ForkStatement implements Statement {
     @Override
     public String toString() {
         return "fork(" + statement + ")";
+    }
+
+    @Override
+    public IMyDictionary<String, Type> typeCheck(IMyDictionary<String, Type> typeEnv) throws StatementException, ExpressionException {
+        statement.typeCheck(typeEnv);
+        return typeEnv;
     }
 }

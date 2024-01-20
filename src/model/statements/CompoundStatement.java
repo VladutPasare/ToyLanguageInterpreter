@@ -1,6 +1,11 @@
 package model.statements;
+import model.ADTs.IMyDictionary;
 import model.ADTs.IMyStack;
 import model.ProgramState;
+import model.exceptions.ExpressionException;
+import model.exceptions.MyException;
+import model.exceptions.StatementException;
+import model.types.Type;
 
 public class CompoundStatement implements Statement {
     private final Statement first;
@@ -26,5 +31,10 @@ public class CompoundStatement implements Statement {
     @Override
     public CompoundStatement deepCopy() {
         return new CompoundStatement(first.deepCopy(), second.deepCopy());
+    }
+
+    @Override
+    public IMyDictionary<String, Type> typeCheck(IMyDictionary<String, Type> typeEnv) throws StatementException, ExpressionException {
+        return second.typeCheck(first.typeCheck(typeEnv));
     }
 }

@@ -5,5 +5,6 @@ import model.exceptions.ADTException;
 public interface IMyStack<T> {
     void push(T element);
     T pop() throws ADTException;
+    T getPeek();
     boolean isEmpty();
 }

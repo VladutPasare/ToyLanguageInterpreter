@@ -3,6 +3,8 @@ package model.expressions;
 import model.ADTs.IMyDictionary;
 import model.ADTs.IMyHeap;
 import model.exceptions.ExpressionException;
+import model.exceptions.MyException;
+import model.types.Type;
 import model.values.Value;
 
 public class VariableExpression implements Expression {
@@ -24,5 +26,10 @@ public class VariableExpression implements Expression {
     @Override
     public Expression deepCopy() {
         return new VariableExpression(new String(id));
+    }
+
+    @Override
+    public Type typeCheck(IMyDictionary<String, Type> typeEnv) throws ExpressionException {
+        return typeEnv.lookUp(id);
     }
 }

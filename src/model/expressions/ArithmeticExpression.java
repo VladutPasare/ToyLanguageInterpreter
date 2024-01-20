@@ -3,7 +3,9 @@ package model.expressions;
 import model.ADTs.IMyDictionary;
 import model.ADTs.IMyHeap;
 import model.exceptions.ExpressionException;
+import model.exceptions.MyException;
 import model.types.IntType;
+import model.types.Type;
 import model.values.IntValue;
 import model.values.Value;
 
@@ -78,5 +80,19 @@ public class ArithmeticExpression implements Expression {
             case 4 -> new ArithmeticExpression('/', e1.deepCopy(), e2);
             default -> new ArithmeticExpression(' ', e1.deepCopy(), e2.deepCopy());
         };
+    }
+
+    @Override
+    public Type typeCheck(IMyDictionary<String, Type> typeEnv) throws ExpressionException {
+        Type type1 = e1.typeCheck(typeEnv);
+        Type type2 = e2.typeCheck(typeEnv);
+
+        if(type1.equals(new IntType()))
+            if(type2.equals(new IntType())) {
+                return new IntType();
+            }
+            else
+                throw new ExpressionException("Second operand is not an integer!");
+       throw new ExpressionException("First operand is not an integer!");
     }
 }

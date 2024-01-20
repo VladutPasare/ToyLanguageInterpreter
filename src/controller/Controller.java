@@ -4,6 +4,7 @@ import model.ADTs.*;
 import model.ProgramState;
 import model.exceptions.*;
 import model.statements.*;
+import model.types.Type;
 import model.values.ReferenceValue;
 import model.values.Value;
 import repository.IRepository;
@@ -43,7 +44,7 @@ public class Controller {
     public void allStep() throws Exception {
         executor = Executors.newFixedThreadPool(2);
         List<ProgramState> programStates = removeCompletedPrograms(repository.getProgramStatesList());
-
+        repository.getCurrentProgram().getExecutionStack().getPeek().typeCheck(new MyDictionary<String, Type>());
 
         while(!programStates.isEmpty()) {
             garbageCollector(programStates);

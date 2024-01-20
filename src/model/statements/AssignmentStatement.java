@@ -3,6 +3,7 @@ package model.statements;
 import model.ADTs.IMyDictionary;
 import model.ProgramState;
 import model.exceptions.ExpressionException;
+import model.exceptions.MyException;
 import model.exceptions.StatementException;
 import model.expressions.Expression;
 import model.types.Type;
@@ -43,5 +44,15 @@ public class AssignmentStatement implements Statement {
     @Override
     public Statement deepCopy() {
         return new AssignmentStatement(new String(id), expression.deepCopy());
+    }
+
+    @Override
+    public IMyDictionary<String, Type> typeCheck(IMyDictionary<String, Type> typeEnv) throws StatementException, ExpressionException {
+        Type varType = typeEnv.lookUp(id);
+        Type expType = expression.typeCheck(typeEnv);
+        if(varType.equals(expType))
+            return typeEnv;
+        else
+            throw new StatementException("Assignment: right hand side and left hand side have different types");
     }
 }

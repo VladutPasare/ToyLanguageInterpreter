@@ -11,4 +11,5 @@ public interface IMyDictionary<K, V> {
     void remove(K key) throws ADTException;
     void update(K key, V newValue);
     boolean isDefined(K key);
+    IMyDictionary<K, V> deepCopy();
 }

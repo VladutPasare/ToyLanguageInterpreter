@@ -3,6 +3,7 @@ package model.statements;
 import model.ADTs.IMyDictionary;
 import model.ProgramState;
 import model.exceptions.ADTException;
+import model.exceptions.MyException;
 import model.exceptions.StatementException;
 import model.types.Type;
 import model.values.Value;
@@ -34,5 +35,16 @@ public class VariableDeclarationStatement implements Statement {
     @Override
     public Statement deepCopy() {
         return new VariableDeclarationStatement(new String(name), type.deepCopy());
+    }
+
+    @Override
+    public IMyDictionary<String, Type> typeCheck(IMyDictionary<String, Type> typeEnv) throws StatementException {
+        try {
+            typeEnv.put(name, type);
+        }
+        catch (ADTException e) {
+            throw new StatementException(e.getMessage());
+        }
+        return typeEnv;
     }
 }

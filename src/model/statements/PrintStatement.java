@@ -1,9 +1,13 @@
 package model.statements;
 
+import model.ADTs.IMyDictionary;
 import model.ADTs.IMyList;
 import model.ProgramState;
 import model.exceptions.ExpressionException;
+import model.exceptions.MyException;
+import model.exceptions.StatementException;
 import model.expressions.Expression;
+import model.types.Type;
 import model.values.Value;
 
 public class PrintStatement implements Statement {
@@ -28,5 +32,11 @@ public class PrintStatement implements Statement {
     @Override
     public Statement deepCopy() {
         return new PrintStatement(expression.deepCopy());
+    }
+
+    @Override
+    public IMyDictionary<String, Type> typeCheck(IMyDictionary<String, Type> typeEnv) throws StatementException, ExpressionException {
+        expression.typeCheck(typeEnv);
+        return typeEnv;
     }
 }

@@ -9,6 +9,7 @@ import model.exceptions.StatementException;
 import model.expressions.Expression;
 import model.types.IntType;
 import model.types.StringType;
+import model.types.Type;
 import model.values.IntValue;
 import model.values.StringValue;
 import model.values.Value;
@@ -71,5 +72,22 @@ public class ReadFileStatement implements Statement {
     @Override
     public Statement deepCopy() {
         return new ReadFileStatement(expression.deepCopy(), new String(variableName));
+    }
+
+    @Override
+    public IMyDictionary<String, Type> typeCheck(IMyDictionary<String, Type> typeEnv) throws StatementException, ExpressionException {
+        if(typeEnv.isDefined(variableName)) {
+            Type varType = typeEnv.lookUp(variableName);
+            Type expType = expression.typeCheck(typeEnv);
+
+            if(varType.equals(new IntType()))
+                if(expType.equals(new StringType()))
+                    return typeEnv;
+                else
+                    throw new StatementException("Expression is not a string!");
+            else
+                throw new StatementException("Variable is not an integer!");
+        }
+        throw new StatementException("Variable " + variableName + " is not defined!");
     }
 }

@@ -1,13 +1,12 @@
 import controller.Controller;
 import model.ADTs.*;
 import model.ProgramState;
+import model.exceptions.ExpressionException;
 import model.exceptions.MyException;
+import model.exceptions.StatementException;
 import model.expressions.*;
 import model.statements.*;
-import model.types.BoolType;
-import model.types.IntType;
-import model.types.ReferenceType;
-import model.types.StringType;
+import model.types.*;
 import model.values.BoolValue;
 import model.values.IntValue;
 import model.values.StringValue;
@@ -19,7 +18,7 @@ import view.RunExample;
 import view.TextMenu;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws StatementException, ExpressionException {
         // View view = new View();
 
 
@@ -92,26 +91,42 @@ public class Main {
                         new PrintStatement(new HeapReadingExpression(new VariableExpression("a"))))))),
                                new CompoundStatement(new PrintStatement(new VariableExpression("v")), new PrintStatement(new HeapReadingExpression(new VariableExpression("a")))))))));
 
+        // wrong example
+        // (int a;(string b;(a=2+3*5;(b=a+1;print(b)))))
+        Statement example11 = new CompoundStatement(new VariableDeclarationStatement("a", new IntType()),
+                    new CompoundStatement(new VariableDeclarationStatement("b", new IntType()),
+                            new CompoundStatement(new AssignmentStatement("a", new ArithmeticExpression('+',
+                                    new ValueExpression(new IntValue(2)), new ArithmeticExpression('*',
+                                    new ValueExpression(new IntValue(3)), new ValueExpression(new IntValue(5))))),
+                                    new CompoundStatement(new AssignmentStatement("b", new ArithmeticExpression(
+                                            '+', new VariableExpression("a"), new ValueExpression(new IntValue(1))
+                                    )), new PrintStatement(new VariableExpression("b"))))));
+
         IMyStack<Statement> stack1 = new MyStack<>();
-        stack1.push(example1);
         IMyStack<Statement> stack2 = new MyStack<>();
-        stack2.push(example2);
         IMyStack<Statement> stack3 = new MyStack<>();
-        stack3.push(example3);
         IMyStack<Statement> stack4 = new MyStack<>();
-        stack4.push(example4);
         IMyStack<Statement> stack5 = new MyStack<>();
-        stack5.push(example5);
         IMyStack<Statement> stack6 = new MyStack<>();
-        stack6.push(example6);
         IMyStack<Statement> stack7 = new MyStack<>();
-        stack7.push(example7);
         IMyStack<Statement> stack8 = new MyStack<>();
-        stack8.push(example8);
         IMyStack<Statement> stack9 = new MyStack<>();
-        stack9.push(example9);
         IMyStack<Statement> stack10 = new MyStack<>();
+        IMyStack<Statement> stack11 = new MyStack<>();
+
+
+
+        stack1.push(example1);
+        stack2.push(example2);
+        stack3.push(example3);
+        stack4.push(example4);
+        stack5.push(example5);
+        stack6.push(example6);
+        stack7.push(example7);
+        stack8.push(example8);
+        stack9.push(example9);
         stack10.push(example10);
+        stack11.push(example11);
 
         ProgramState programState1 = new ProgramState(stack1, new MyDictionary<>(), new MyList<Value>(), new MyDictionary<>(), new MyHeap<>());
         ProgramState programState2 = new ProgramState(stack2, new MyDictionary<>(), new MyList<Value>(), new MyDictionary<>(), new MyHeap<>());
@@ -123,6 +138,7 @@ public class Main {
         ProgramState programState8 = new ProgramState(stack8, new MyDictionary<>(), new MyList<Value>(), new MyDictionary<>(), new MyHeap<>());
         ProgramState programState9 = new ProgramState(stack9, new MyDictionary<>(), new MyList<Value>(), new MyDictionary<>(), new MyHeap<>());
         ProgramState programState10 = new ProgramState(stack10, new MyDictionary<>(), new MyList<Value>(), new MyDictionary<>(), new MyHeap<>());
+        ProgramState programState11 = new ProgramState(stack11, new MyDictionary<>(), new MyList<Value>(), new MyDictionary<>(), new MyHeap<>());
 
         try {
             IRepository repository1 = new Repository("src/log1.txt");
@@ -135,6 +151,7 @@ public class Main {
             IRepository repository8 = new Repository("src/log8.txt");
             IRepository repository9 = new Repository("src/log9.txt");
             IRepository repository10 = new Repository("src/log10.txt");
+            IRepository repository11 = new Repository("src/log11.txt");
 
             repository1.add(programState1);
             repository2.add(programState2);
@@ -146,6 +163,7 @@ public class Main {
             repository8.add(programState8);
             repository9.add(programState9);
             repository10.add(programState10);
+            repository11.add(programState11);
 
             Controller controller1 = new Controller(repository1);
             Controller controller2 = new Controller(repository2);
@@ -157,6 +175,7 @@ public class Main {
             Controller controller8 = new Controller(repository8);
             Controller controller9 = new Controller(repository9);
             Controller controller10 = new Controller(repository10);
+            Controller controller11 = new Controller(repository11);
 
             TextMenu textMenu = new TextMenu();
 
@@ -171,6 +190,7 @@ public class Main {
             textMenu.addCommand(new RunExample("8", example8.toString(), controller8));
             textMenu.addCommand(new RunExample("9", example9.toString(), controller9));
             textMenu.addCommand(new RunExample("10", example10.toString(), controller10));
+            textMenu.addCommand(new RunExample("11", example11.toString(), controller11));
 
             textMenu.show();
 

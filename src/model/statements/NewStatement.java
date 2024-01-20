@@ -7,6 +7,7 @@ import model.exceptions.ExpressionException;
 import model.exceptions.StatementException;
 import model.expressions.Expression;
 import model.types.ReferenceType;
+import model.types.Type;
 import model.values.ReferenceValue;
 import model.values.Value;
 
@@ -51,5 +52,16 @@ public class NewStatement implements Statement {
     @Override
     public Statement deepCopy() {
         return new NewStatement(new String(id), expression.deepCopy());
+    }
+
+    @Override
+    public IMyDictionary<String, Type> typeCheck(IMyDictionary<String, Type> typeEnv) throws StatementException, ExpressionException {
+        Type varType = typeEnv.lookUp(id);
+        Type expType = expression.typeCheck(typeEnv);
+
+        if(varType.equals(new ReferenceType(expType)))
+            return typeEnv;
+        else
+            throw new StatementException("New statement: right hand side and left hand side have different types!");
     }
 }

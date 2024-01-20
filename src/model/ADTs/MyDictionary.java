@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class MyDictionary<K, V> implements IMyDictionary<K, V> {
-    private final Map<K, V> map;
+    private Map<K, V> map;
 
     public MyDictionary () {
         map = new HashMap<>();
@@ -20,6 +20,10 @@ public class MyDictionary<K, V> implements IMyDictionary<K, V> {
 
     public Map<K, V> getContent() {
         return map;
+    }
+
+    public void setContent(Map<K, V> map) {
+        this.map = map;
     }
 
     @Override
@@ -51,5 +55,13 @@ public class MyDictionary<K, V> implements IMyDictionary<K, V> {
         for(K key: map.keySet())
             s.append(key.toString()).append("-->").append(map.get(key)).append("\n");
         return s.toString();
+    }
+
+    @Override
+    public IMyDictionary<K, V> deepCopy() {
+        Map<K, V> newMap = new HashMap<>(map);
+        MyDictionary<K, V> newDictionary = new MyDictionary<>();
+        newDictionary.setContent(newMap);
+        return newDictionary;
     }
 }

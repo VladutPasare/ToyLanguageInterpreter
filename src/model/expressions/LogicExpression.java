@@ -3,7 +3,10 @@ package model.expressions;
 import model.ADTs.IMyDictionary;
 import model.ADTs.IMyHeap;
 import model.exceptions.ExpressionException;
+import model.exceptions.MyException;
 import model.types.BoolType;
+import model.types.IntType;
+import model.types.Type;
 import model.values.BoolValue;
 import model.values.Value;
 
@@ -65,5 +68,19 @@ public class LogicExpression implements Expression {
         if(operator == 2)
             return new LogicExpression(e1.deepCopy(), e2.deepCopy(), "or");
         return null;
+    }
+
+    @Override
+    public Type typeCheck(IMyDictionary<String, Type> typeEnv) throws ExpressionException {
+        Type type1 = e1.typeCheck(typeEnv);
+        Type type2 = e2.typeCheck(typeEnv);
+
+        if(type1.equals(new BoolType()))
+            if(type2.equals(new BoolType())) {
+                return new BoolType();
+            }
+            else
+                throw new ExpressionException("Second operand is not a boolean!");
+        else throw new ExpressionException("First operand is not a boolean!");
     }
 }

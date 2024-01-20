@@ -24,6 +24,11 @@ public class MyStack<T> implements IMyStack<T> {
     }
 
     @Override
+    public T getPeek() {
+        return stack.peek();
+    }
+
+    @Override
     public boolean isEmpty() {
         return stack.isEmpty();
     }

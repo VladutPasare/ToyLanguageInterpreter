@@ -1,11 +1,13 @@
 package model.statements;
 
+import model.ADTs.IMyDictionary;
 import model.ProgramState;
 import model.exceptions.ADTException;
 import model.exceptions.ExpressionException;
 import model.exceptions.StatementException;
 import model.expressions.Expression;
 import model.types.StringType;
+import model.types.Type;
 import model.values.StringValue;
 import model.values.Value;
 
@@ -49,5 +51,13 @@ public class CloseRFile implements Statement {
     @Override
     public Statement deepCopy() {
         return new CloseRFile(expression.deepCopy());
+    }
+
+    @Override
+    public IMyDictionary<String, Type> typeCheck(IMyDictionary<String, Type> typeEnv) throws StatementException, ExpressionException {
+        Type expType = expression.typeCheck(typeEnv);
+        if(expType.equals(new StringType()))
+            return typeEnv;
+        throw new StatementException("Expression is not a string!");
     }
 }

@@ -3,7 +3,10 @@ package model.expressions;
 import model.ADTs.IMyDictionary;
 import model.ADTs.IMyHeap;
 import model.exceptions.ExpressionException;
+import model.exceptions.MyException;
+import model.types.BoolType;
 import model.types.IntType;
+import model.types.Type;
 import model.values.BoolValue;
 import model.values.IntValue;
 import model.values.Value;
@@ -88,5 +91,18 @@ public class RelationalExpression implements Expression {
     @Override
     public Expression deepCopy() {
         return new RelationalExpression(e1.deepCopy(), e2.deepCopy(), operator);
+    }
+
+    @Override
+    public Type typeCheck(IMyDictionary<String, Type> typeEnv) throws ExpressionException {
+        Type type1 = e1.typeCheck(typeEnv);
+        Type type2 = e2.typeCheck(typeEnv);
+
+        if(type1.equals(new IntType()))
+            if(type2.equals(new IntType()))
+                return new BoolType();
+            else
+                throw new ExpressionException("Second operand is not an integer!");
+        throw new ExpressionException("First operand is not an integer!");
     }
 }

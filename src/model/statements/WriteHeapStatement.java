@@ -8,6 +8,7 @@ import model.exceptions.ExpressionException;
 import model.exceptions.StatementException;
 import model.expressions.Expression;
 import model.types.ReferenceType;
+import model.types.Type;
 import model.values.ReferenceValue;
 import model.values.Value;
 
@@ -54,5 +55,23 @@ public class WriteHeapStatement implements Statement {
     @Override
     public Statement deepCopy() {
         return null;
+    }
+
+    @Override
+    public IMyDictionary<String, Type> typeCheck(IMyDictionary<String, Type> typeEnv) throws StatementException, ExpressionException {
+        if(typeEnv.isDefined(id)) {
+            Type idType = typeEnv.lookUp(id);
+            Type expType = expression.typeCheck(typeEnv);
+
+            if(idType instanceof ReferenceType) {
+                if(idType.equals(new ReferenceType(expType)))
+                    return typeEnv;
+                else
+                    throw new StatementException("The right hand side has other type than the referenced type of the left hand side!");
+            }
+            else
+                throw new StatementException(id + " is not a reference!");
+        }
+        throw new StatementException(id + " is not defined!");
     }
 }
