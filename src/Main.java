@@ -115,7 +115,7 @@ public class Main {
         IMyStack<Statement> stack11 = new MyStack<>();
 
 
-
+/*
         stack1.push(example1);
         stack2.push(example2);
         stack3.push(example3);
@@ -127,6 +127,86 @@ public class Main {
         stack9.push(example9);
         stack10.push(example10);
         stack11.push(example11);
+       */
+
+        try {
+            example1.typeCheck(new MyDictionary<String, Type>());
+            stack1.push(example1);
+        }
+        catch (Exception e) {
+                System.out.println(e.toString());
+        }
+        try {
+            example2.typeCheck(new MyDictionary<String, Type>());
+            stack2.push(example2);
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        try {
+            example3.typeCheck(new MyDictionary<String, Type>());
+            stack3.push(example3);
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        try {
+            example4.typeCheck(new MyDictionary<String, Type>());
+            stack4.push(example4);
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        try {
+            example5.typeCheck(new MyDictionary<String, Type>());
+            stack5.push(example5);
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        try {
+            example6.typeCheck(new MyDictionary<String, Type>());
+            stack6.push(example6);
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        try {
+            example7.typeCheck(new MyDictionary<String, Type>());
+            stack7.push(example7);
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        try {
+            example8.typeCheck(new MyDictionary<String, Type>());
+            stack8.push(example8);
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        try {
+            example9.typeCheck(new MyDictionary<String, Type>());
+            stack9.push(example9);
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
+
+        try {
+            example10.typeCheck(new MyDictionary<String, Type>());
+            stack10.push(example10);
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        try {
+            example11.typeCheck(new MyDictionary<String, Type>());
+            stack11.push(example11);
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
 
         ProgramState programState1 = new ProgramState(stack1, new MyDictionary<>(), new MyList<Value>(), new MyDictionary<>(), new MyHeap<>());
         ProgramState programState2 = new ProgramState(stack2, new MyDictionary<>(), new MyList<Value>(), new MyDictionary<>(), new MyHeap<>());
